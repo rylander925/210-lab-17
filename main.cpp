@@ -23,7 +23,7 @@ void deleteList(Node *head);
 
 void push_front(Node *head, int value);
 
-void fillList(Node *head, int size, int min = 0, int max = 99);
+void fillList(Node *&head, int size, int min = 0, int max = 99);
 
 int main() {
     Node *head = nullptr;
@@ -63,6 +63,10 @@ int main() {
     return 0;
 }
 
+/**
+ * Output contents of linked list
+ * @param hd Head node of the linked list
+ */
 void output(Node * hd) {
     if (!hd) {
         cout << "Empty list.\n";
@@ -77,6 +81,11 @@ void output(Node * hd) {
     cout << endl;
 }
 
+/**
+ * Deletes a given node from a linked list
+ * @param head Head node of the linked list
+ * @param entry The number of the node to delete
+ */
 void deleteNode(Node *head, int entry) {
     Node *current = head;
     Node *prev = head;
@@ -98,6 +107,12 @@ void deleteNode(Node *head, int entry) {
 
 }
 
+/**
+ * Inserts a node to a specified position in a linked list
+ * @param head Head node of the linked list
+ * @param entry Number of the node to insert at
+ * @param value Value assigned to the new node
+ */
 void insertNode(Node *head, int entry, int value) {
     Node *current = head;
     Node *prev = head;
@@ -115,6 +130,10 @@ void insertNode(Node *head, int entry, int value) {
     prev->next = newnode;
 }
 
+/**
+ * Deletes all the nodes of a linked list
+ * @param head Head node of the linked list to delete
+ */
 void deleteList(Node* head) {
     Node *current = head;
     // deleting the linked list
@@ -127,6 +146,11 @@ void deleteList(Node* head) {
     head = nullptr;
 }
 
+/**
+ * Prepends a node to a linked list
+ * @param head Head node of the linked list
+ * @param value Value assigned to the new node
+ */
 void push_front(Node *head, int value) {
     Node *newVal = new Node;
     // adds node at head
@@ -142,7 +166,14 @@ void push_front(Node *head, int value) {
     }
 }
 
-void fillList(Node *head, int size, int min, int max) {
+/**
+ * Fills a linked list with random integers
+ * @param head Head node of the linked list to fill
+ * @param size Number of nodes to add
+ * @param min Minimum range of integer values
+ * @param max Maximum range of integer values
+ */
+void fillList(Node *&head, int size, int min, int max) {
     for (int i = 0; i < size; i++) {
         push_front(head, min + rand() % (max + 1));
     }
