@@ -24,6 +24,8 @@ void deleteList(Node* &head);
 
 void push_front(Node* &head, int value);
 
+void push_back(Node* &head, int value);
+
 void fillList(Node* &head, int size, int min = 0, int max = 99);
 
 int main() {
@@ -56,7 +58,6 @@ int main() {
             cout << "Node must be greater than 1" << endl;
         }
     } while (entry < 1);
-    
     deleteNode(head, entry);
     output(head);
 
@@ -86,6 +87,11 @@ int main() {
         }
     } while (entry < 1);
     insertNode(head, entry, 10000);
+    output(head);
+
+    //insert a node to back
+    cout << "Adding 10000 to the back of the list" << endl;
+    push_back(head, 10000);
     output(head);
 
     // delete list
@@ -198,11 +204,29 @@ void push_front(Node* &head, int value) {
         head = newVal;
         newVal->next = nullptr;
         newVal->value = value;
-    }
-    else { // its a second or subsequent node; place at the head
+    } else { // its a second or subsequent node; place at the head
         newVal->next = head;
         newVal->value = value;
         head = newVal;
+    }
+}
+
+/**
+ * Appends a node to a linked list
+ * @param head Head node of the linked list
+ * @param value Value assigned to the new node
+ */
+void push_back(Node* &head, int value) {
+    Node* current = head;
+    Node* newVal = new Node;
+    newVal->next = nullptr;
+    newVal->value = value;
+    if(!head) { // if this is the first node, it's the new head
+        head = newVal;
+    } else {
+        // traverse list until current is the last node
+        while (current->next) { current = current->next; }
+        current->next = newVal;
     }
 }
 
