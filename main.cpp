@@ -1,3 +1,8 @@
+/*
+COMSC-210 | Lab 17 | Rylan Der
+IDE Used: Visual Studio Code
+*/
+
 #include <iostream>
 using namespace std;
 
