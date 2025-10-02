@@ -43,15 +43,19 @@ int main() {
         cout << "Choice --> ";
         cin >> entry;
         cout << endl;
+        //Validate for valid integer
         if (cin.fail()) {
             cout << "Enter an integer" << endl;
             cin.clear();
             cin.ignore();
         }
-        if (entry < 1 || entry > SIZE) {
-            cout << "Node must be between 1 and " << SIZE << endl;
+        //Only ensure for greater than 0. 
+        //Since size is not updated with the list, does not attempt to check for a max range
+        //Instead, delete function will delete the last element if greater
+        if (entry < 1) {
+            cout << "Node must be greater than 1" << endl;
         }
-    } while (entry < 1 || entry > SIZE);
+    } while (entry < 1);
     
     deleteNode(head, entry);
     output(head);
@@ -68,15 +72,19 @@ int main() {
         cout << "Choice --> ";
         cin >> entry;
         cout << endl;
+        //Validate for a valid integer
         if (cin.fail()) {
             cout << "Enter an integer" << endl;
             cin.clear();
             cin.ignore();
         }
-        if (entry < 1 || entry > SIZE) {
-            cout << "Node must be between 1 and " << SIZE << endl;
+        //Only ensure greater than 0. 
+        //Since size is not updated with the list, does not attempt to check for a max range
+        //Instead, insert function will insert after last element if greater
+        if (entry < 1) {
+            cout << "Node must be greater than 1" << endl;
         }
-    } while (entry < 1 || entry > SIZE);
+    } while (entry < 1);
     insertNode(head, entry, 10000);
     output(head);
 
@@ -114,8 +122,10 @@ void deleteNode(Node* &head, int entry) {
     Node* current = head;
     Node* prev = head;
 
-    // traverse entry many times and delete that node
-    for (int i = 0; i < (entry-1); i++)
+    // traverse [entry] many times and delete that node
+    // stop at current->next to prevent seg. faults and properly delete last element
+    // if an invalid entry is given 
+    for (int i = 0; i < (entry-1) && current->next; i++)
         if (i == 0)
             current = current->next;
         else {
@@ -137,6 +147,7 @@ void deleteNode(Node* &head, int entry) {
 
 /**
  * Inserts a node after a specified position in a linked list
+ * If specified position is greater than the number of elements, inserts node before the last node
  * @param head Head node of the linked list
  * @param entry Number of the node to insert at
  * @param value Value assigned to the new node
@@ -144,7 +155,8 @@ void deleteNode(Node* &head, int entry) {
 void insertNode(Node* &head, int entry, int value) {
     Node* current = head;
     Node* prev = head;
-    for (int i = 0; i < (entry); i++)
+    //Stops when current is a nullptr to prevent invalid range access
+    for (int i = 0; i < (entry) && current; i++)
         if (i == 0)
             current = current->next;
         else {
