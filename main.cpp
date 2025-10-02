@@ -15,11 +15,15 @@ struct Node {
 
 void output(Node *);
 
-void deleteNode(Node * head, int entry);
+void deleteNode(Node *head, int entry);
 
-void insertNode(Node * head, int entry, int value);
+void insertNode(Node *head, int entry, int value);
 
-void deleteList(Node * head);
+void deleteList(Node *head);
+
+void push_front(Node *head, int value);
+
+void fillList(Node *head, int size, int min = 0, int max = 99);
 
 int main() {
     Node *head = nullptr;
@@ -27,22 +31,7 @@ int main() {
     int count = 0;
 
     // create a linked list of size SIZE with random numbers 0-99
-    for (int i = 0; i < SIZE; i++) {
-        int tmp_val = rand() % 100;
-        Node *newVal = new Node;
-        
-        // adds node at head
-        if (!head) { // if this is the first node, it's the new head
-            head = newVal;
-            newVal->next = nullptr;
-            newVal->value = tmp_val;
-        }
-        else { // its a second or subsequent node; place at the head
-            newVal->next = head;
-            newVal->value = tmp_val;
-            head = newVal;
-        }
-    }
+    fillList(head, SIZE, 0, 99);
     output(head);
 
     // deleting a node
@@ -67,6 +56,7 @@ int main() {
     insertNode(head, entry, 10000);
     output(head);
 
+    // delete list
     deleteList(head);
     output(head);
 
@@ -87,9 +77,9 @@ void output(Node * hd) {
     cout << endl;
 }
 
-void deleteNode(Node * head, int entry) {
-    Node * current = head;
-    Node * prev = head;
+void deleteNode(Node *head, int entry) {
+    Node *current = head;
+    Node *prev = head;
 
     // traverse entry many times and delete that node
     for (int i = 0; i < (entry-1); i++)
@@ -108,9 +98,9 @@ void deleteNode(Node * head, int entry) {
 
 }
 
-void insertNode(Node * head, int entry, int value) {
-    Node * current = head;
-    Node * prev = head;
+void insertNode(Node *head, int entry, int value) {
+    Node *current = head;
+    Node *prev = head;
     for (int i = 0; i < (entry); i++)
         if (i == 0)
             current = current->next;
@@ -125,8 +115,8 @@ void insertNode(Node * head, int entry, int value) {
     prev->next = newnode;
 }
 
-void deleteList(Node * head) {
-    Node * current = head;
+void deleteList(Node* head) {
+    Node *current = head;
     // deleting the linked list
     current = head;
     while (current) {
@@ -135,4 +125,25 @@ void deleteList(Node * head) {
         current = head;
     }
     head = nullptr;
+}
+
+void push_front(Node *head, int value) {
+    Node *newVal = new Node;
+    // adds node at head
+    if (!head) { // if this is the first node, it's the new head
+        head = newVal;
+        newVal->next = nullptr;
+        newVal->value = value;
+    }
+    else { // its a second or subsequent node; place at the head
+        newVal->next = head;
+        newVal->value = value;
+        head = newVal;
+    }
+}
+
+void fillList(Node *head, int size, int min, int max) {
+    for (int i = 0; i < size; i++) {
+        push_front(head, min + rand() % (max + 1));
+    }
 }
