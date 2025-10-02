@@ -10,24 +10,24 @@ const int SIZE = 7;
 
 struct Node {
     float value;
-    Node *next;
+    Node* next;
 };
 
-void output(Node *);
+void output(Node* );
 
-void deleteNode(Node *head, int entry);
+void deleteNode(Node* &head, int entry);
 
-void insertNode(Node *head, int entry, int value);
+void insertNode(Node* &head, int entry, int value);
 
-void deleteList(Node *head);
+void deleteList(Node* &head);
 
-void push_front(Node *head, int value);
+void push_front(Node* &head, int value);
 
-void fillList(Node *&head, int size, int min = 0, int max = 99);
+void fillList(Node* &head, int size, int min = 0, int max = 99);
 
 int main() {
-    Node *head = nullptr;
-    Node *current = nullptr;
+    Node* head = nullptr;
+    Node* current = nullptr;
     int count = 0;
 
     // create a linked list of size SIZE with random numbers 0-99
@@ -67,13 +67,13 @@ int main() {
  * Output contents of linked list
  * @param hd Head node of the linked list
  */
-void output(Node * hd) {
+void output(Node* hd) {
     if (!hd) {
         cout << "Empty list.\n";
         return;
     }
     int count = 1;
-    Node * current = hd;
+    Node* current = hd;
     while (current) {
         cout << "[" << count++ << "] " << current->value << endl;
         current = current->next;
@@ -86,9 +86,9 @@ void output(Node * hd) {
  * @param head Head node of the linked list
  * @param entry The number of the node to delete
  */
-void deleteNode(Node *head, int entry) {
-    Node *current = head;
-    Node *prev = head;
+void deleteNode(Node* &head, int entry) {
+    Node* current = head;
+    Node* prev = head;
 
     // traverse entry many times and delete that node
     for (int i = 0; i < (entry-1); i++)
@@ -99,7 +99,11 @@ void deleteNode(Node *head, int entry) {
             prev = prev->next;
         }
     // at this point, delete current and reroute pointers
-    if (current) {  // checks for current to be valid before deleting the node
+    if (current == head) {
+        head = current->next;
+        delete current;
+        current = nullptr;
+    } else if (current) {  // checks for current to be valid before deleting the node
         prev->next = current->next;
         delete current;
         current = nullptr;
@@ -108,14 +112,14 @@ void deleteNode(Node *head, int entry) {
 }
 
 /**
- * Inserts a node to a specified position in a linked list
+ * Inserts a node after a specified position in a linked list
  * @param head Head node of the linked list
  * @param entry Number of the node to insert at
  * @param value Value assigned to the new node
  */
-void insertNode(Node *head, int entry, int value) {
-    Node *current = head;
-    Node *prev = head;
+void insertNode(Node* &head, int entry, int value) {
+    Node* current = head;
+    Node* prev = head;
     for (int i = 0; i < (entry); i++)
         if (i == 0)
             current = current->next;
@@ -124,7 +128,7 @@ void insertNode(Node *head, int entry, int value) {
             prev = prev->next;
         }
     //at this point, insert a node between prev and current
-    Node * newnode = new Node;
+    Node* newnode = new Node;
     newnode->value = value;
     newnode->next = current;
     prev->next = newnode;
@@ -134,8 +138,8 @@ void insertNode(Node *head, int entry, int value) {
  * Deletes all the nodes of a linked list
  * @param head Head node of the linked list to delete
  */
-void deleteList(Node* head) {
-    Node *current = head;
+void deleteList(Node* &head) {
+    Node* current = head;
     // deleting the linked list
     current = head;
     while (current) {
@@ -151,8 +155,8 @@ void deleteList(Node* head) {
  * @param head Head node of the linked list
  * @param value Value assigned to the new node
  */
-void push_front(Node *head, int value) {
-    Node *newVal = new Node;
+void push_front(Node* &head, int value) {
+    Node* newVal = new Node;
     // adds node at head
     if (!head) { // if this is the first node, it's the new head
         head = newVal;
@@ -173,7 +177,7 @@ void push_front(Node *head, int value) {
  * @param min Minimum range of integer values
  * @param max Maximum range of integer values
  */
-void fillList(Node *&head, int size, int min, int max) {
+void fillList(Node* &head, int size, int min, int max) {
     for (int i = 0; i < size; i++) {
         push_front(head, min + rand() % (max + 1));
     }
