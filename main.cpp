@@ -6,7 +6,8 @@ IDE Used: Visual Studio Code
 #include <iostream>
 using namespace std;
 
-const int SIZE = 7;  
+const int SIZE = 7; 
+const int STREAM_IGNORE_CHARS = 100; 
 
 struct Node {
     float value;
@@ -35,24 +36,47 @@ int main() {
     output(head);
 
     // deleting a node
-    cout << "Which node to delete? " << endl;
-    output(head);
-    int entry;
-    cout << "Choice --> ";
-    cin >> entry;
+    int entry = 1;
+    do {
+        cout << "Which node to delete? " << endl;
+        output(head);
+        cout << "Choice --> ";
+        cin >> entry;
+        cout << endl;
+        if (cin.fail()) {
+            cout << "Enter an integer" << endl;
+            cin.clear();
+            cin.ignore();
+        }
+        if (entry < 1 || entry > SIZE) {
+            cout << "Node must be between 1 and " << SIZE << endl;
+        }
+    } while (entry < 1 || entry > SIZE);
+    
     deleteNode(head, entry);
     output(head);
 
     // insert a node
-    current = head;
-    cout << "After which node to insert 10000? " << endl;
-    count = 1;
-    while (current) {
-        cout << "[" << count++ << "] " << current->value << endl;
-        current = current->next;
-    }
-    cout << "Choice --> ";
-    cin >> entry;
+    do {
+        current = head;
+        cout << "After which node to insert 10000? " << endl;
+        count = 1;
+        while (current) {
+            cout << "[" << count++ << "] " << current->value << endl;
+            current = current->next;
+        }
+        cout << "Choice --> ";
+        cin >> entry;
+        cout << endl;
+        if (cin.fail()) {
+            cout << "Enter an integer" << endl;
+            cin.clear();
+            cin.ignore();
+        }
+        if (entry < 1 || entry > SIZE) {
+            cout << "Node must be between 1 and " << SIZE << endl;
+        }
+    } while (entry < 1 || entry > SIZE);
     insertNode(head, entry, 10000);
     output(head);
 
