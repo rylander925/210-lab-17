@@ -55,7 +55,7 @@ int main() {
         //Since size is not updated with the list, does not attempt to check for a max range
         //Instead, delete function will delete the last element if greater
         if (entry < 1) {
-            cout << "Node must be greater than 1" << endl;
+            cout << "Node must be greater than 0" << endl;
         }
     } while (entry < 1);
     deleteNode(head, entry);
@@ -63,13 +63,8 @@ int main() {
 
     // insert a node
     do {
-        current = head;
         cout << "After which node to insert 10000? " << endl;
-        count = 1;
-        while (current) {
-            cout << "[" << count++ << "] " << current->value << endl;
-            current = current->next;
-        }
+        output(head);
         cout << "Choice --> ";
         cin >> entry;
         cout << endl;
@@ -83,7 +78,7 @@ int main() {
         //Since size is not updated with the list, does not attempt to check for a max range
         //Instead, insert function will insert after last element if greater
         if (entry < 1) {
-            cout << "Node must be greater than 1" << endl;
+            cout << "Node must be greater than 0" << endl;
         }
     } while (entry < 1);
     insertNode(head, entry, 10000);
